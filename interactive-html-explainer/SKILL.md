@@ -1,56 +1,71 @@
 ---
 name: interactive-html-explainer
-description: Use when the user asks to explain a topic, concept, or system as a rich visual document — triggered by "explain X", "create a guide for X", "teach me about X", "make an explainer for X", or any request to turn a topic into an interactive HTML page.
+description: Use when the user asks to explain a topic as an interactive HTML page, visual explainer, or rich guide — triggered by "make me an interactive page about X", "create a visual explainer for X", "explain X as HTML", or any explicit request for an HTML learning artifact. Do NOT trigger on general "explain X" or "teach me X" requests without an HTML/visual qualifier.
 ---
 
 # Interactive HTML Explainer
 
 ## Overview
 
-Produce a self-contained, single-file HTML explainer that teaches a topic through interactive navigation, animated elements, and layered depth. No CDN links, no external dependencies — everything inline.
+Produce a self-contained, single-file HTML explainer that teaches a topic through interactive navigation, animated elements, and research-backed content. No CDN links, no external dependencies — everything inline. Apply maximum reasoning effort throughout the entire workflow.
 
-## When to Use
+## Workflow (in order)
 
-- "Explain X to me" / "create a guide to X"
-- User wants to understand something from scratch
-- Topic has enough structure to benefit from sections (history, how it works, key rules, economics, culture)
+**1. Web search** — Run 3–5 targeted searches to gather authoritative data before writing anything. Look for: key statistics, common misconceptions, primary sources (official organisations, government sites, institutional research, established journalism). Never invent a number — every specific statistic must come from a real, web-searched URL.
 
-**Don't use when:** user wants a quick text answer — this is a ~300-line HTML artifact.
+**2. Plan sections** — Decide which sections fit this topic (see below). For each section, identify the inverted-pyramid lead: the single most important insight a reader should leave with.
 
-## Core Pattern
+**3. Write the HTML** — With research complete and section plan set, write the full file in one pass.
 
-### 1. Always Include These Sections (adapt names to topic)
+## Sections
 
+**Always required (3):**
 | Section | Purpose |
 |---------|---------|
-| Overview | What is it, why it matters, key stats |
-| History / Origin | Timeline of how it came to be |
-| Structure / Components | How it's organized (teams, parts, layers, etc.) |
-| How It Works | The mechanics / rules / process |
-| Economics / Business | Money, incentives, scale |
-| Culture / Impact | Broader significance |
+| Overview | What it is, why it matters, 3–5 key stats with sources |
+| How It Works | The core mechanics, rules, or process |
+| One contextual deep-dive | Choose based on topic (History, Structure, Key Players, etc.) |
 
-Not every topic needs all six — cut ones that don't add value.
+**Optional — include if they add genuine value (up to 3 more):**
+Economics / Scale · Culture & Impact · Controversies · Key People · Timeline · Comparisons
 
-### 2. Always Include These Interactive Elements
+## Interactive Elements — Pick by Topic Shape
 
-| Element | When |
-|---------|------|
-| Sticky tab bar | Always — main navigation between sections |
-| Animated stat counters | Overview section — 3-5 key numbers that count up on scroll |
-| Collapsible accordion | Rules, FAQs, or any list of "things to know" |
-| Click-to-expand timeline | History section |
-| Hover tooltips (`data-tip`) | Inline on jargon words |
-| Card grid | For parallel concepts (positions, roles, types) |
-| Phase/step flow | For sequential processes (season, pipeline, lifecycle) |
+Sticky tab bar and hover tooltips on jargon are **always included**. For the rest, match element to topic:
 
-Pick 2-3 beyond the tab bar and timeline. Don't use all of them — overcrowding reduces clarity.
+| If the topic has… | Use… |
+|---|---|
+| A sequence of events | Click-to-expand timeline |
+| Parallel comparable items (roles, types, countries) | Card grid |
+| A process or lifecycle | Phase/step flow |
+| Rules, FAQs, or dense "things to know" | Collapsible accordion |
+| Key stats | Animated stat counters (trigger on scroll) |
 
-### 3. Design System (copy verbatim, then customize colors)
+Pick **2–3 beyond the tab bar**. Don't use all of them — overcrowding reduces clarity.
+
+## Cognitive Learning Rules
+
+**Hard rules (non-negotiable):**
+- **Inverted pyramid:** The most important insight goes in the first sentence of every section — not buried at the end
+- **Concrete before abstract:** Show a real example before explaining the concept. Never lead with theory
+- **Prior knowledge bridge:** The hero section opens with an analogy to something the reader almost certainly already understands
+
+**Guidelines:**
+- Chunking: max ~3 ideas per visual unit (card, accordion item, timeline entry)
+- Dual coding: major concepts get both a text explanation and a visual representation
+- Signaling: bold exactly one key phrase per paragraph — not multiple
+
+## Sources
+
+- **Hover tooltips on specific stats and claims** — reader never loses their place
+- **Dedicated "Sources" tab** — full list of URLs for readers who want to go deeper
+- Source priority: official/primary sources → institutional/academic → established journalism (Reuters, FT, BBC, Economist) → Wikipedia as structure only, never as terminal citation
+
+## Design System
 
 ```css
 :root {
-  --primary: #17408B;   /* adjust to topic */
+  --primary: #17408B;   /* adjust to topic's visual identity */
   --accent:  #C9082A;   /* adjust to topic */
   --highlight: #f5a623;
   --bg: #0d0d0d;
@@ -63,41 +78,29 @@ Pick 2-3 beyond the tab bar and timeline. Don't use all of them — overcrowding
 }
 ```
 
-Dark background always. Use `--primary` / `--accent` as the topic's brand colors (sport team colors, company palette, flag colors, etc.).
+Dark background always. Tie `--primary`/`--accent` to the topic's brand colors (team colors, flag colors, company palette, etc.).
 
-### 4. File Output
-
-- Single `.html` file, no external assets
-- All CSS in `<style>` block in `<head>`
-- All JS in `<script>` block before `</body>`
-- Open in browser with `cmd.exe /c start "" "$(wslpath -w /path/to/file.html)"` on WSL
-
-## HTML Structure Template
+## HTML Structure
 
 ```html
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <!-- meta, title, <style> with full CSS -->
-</head>
+<head><!-- meta, title, <style> --></head>
 <body>
-  <header class="hero">          <!-- gradient hero, title, subtitle, badge -->
-  <nav class="tab-bar">          <!-- sticky tab buttons -->
+  <header class="hero">       <!-- gradient, title, prior-knowledge analogy, badge -->
+  <nav class="tab-bar">       <!-- sticky tab buttons -->
   <section class="section active" id="tab-overview">
-  <section class="section" id="tab-history">
-  <section class="section" id="tab-structure">
-  <section class="section" id="tab-howit works">
-  <section class="section" id="tab-economics">
-  <section class="section" id="tab-culture">
+  <section class="section" id="tab-how-it-works">
+  <section class="section" id="tab-[deep-dive]">
+  <!-- optional sections -->
+  <section class="section" id="tab-sources">
   <footer>
-  <script>                       <!-- tab switching + interactive element logic -->
+  <script>                    <!-- tab switching + element logic -->
 </body>
 </html>
 ```
 
-## Key Reusable JS Patterns
-
-**Tab switching (always include):**
+**Tab switching (always use this exact pattern — forgetting to deactivate all tabs is the most common bug):**
 ```js
 document.querySelectorAll('.tab-btn').forEach(btn => {
   btn.addEventListener('click', () => {
@@ -109,48 +112,28 @@ document.querySelectorAll('.tab-btn').forEach(btn => {
 });
 ```
 
-**Animated counter (for stat chips):**
-```js
-function animateCount(el, target) {
-  let n = 0; const step = Math.ceil(target / 40);
-  const t = setInterval(() => {
-    n = Math.min(n + step, target);
-    el.textContent = n;
-    if (n >= target) clearInterval(t);
-  }, 30);
-}
-// Trigger on IntersectionObserver when stat row enters viewport
-```
+## Output
 
-**Accordion:**
-```js
-document.querySelectorAll('.acc-header').forEach(h => {
-  h.addEventListener('click', () => {
-    const open = h.classList.contains('open');
-    document.querySelectorAll('.acc-header').forEach(x => {
-      x.classList.remove('open');
-      x.nextElementSibling.classList.remove('open');
-    });
-    if (!open) { h.classList.add('open'); h.nextElementSibling.classList.add('open'); }
-  });
-});
-```
+Save as `<topic-slug>.html` in the current working directory (e.g. `nba.html`, `eu-carbon-market.html`).
 
 ## Common Mistakes
 
 | Mistake | Fix |
 |---------|-----|
-| Using Bootstrap/Tailwind CDN | All CSS must be inline — no network requests |
-| Too many interactive widgets | Pick 3-4 max; clarity beats novelty |
-| Forgetting mobile | Use `clamp()` for font sizes; flex-wrap for grids |
-| Generic dark colors | Tie `--primary`/`--accent` to the topic's visual identity |
-| Forgetting to open the file | After writing, run the `cmd.exe /c start` or `wslview` command |
+| Using Bootstrap/Tailwind CDN | All CSS inline — no network requests |
+| Leading with definition, not insight | Inverted pyramid: most important thing first |
+| Abstract explanation before example | Concrete first, always |
+| Inventing statistics | Web search every number before using it |
+| Too many interactive widgets | 2–3 beyond the tab bar max |
+| Generic dark colors | Tie colors to the topic's visual identity |
+| Forgetting mobile | Use `clamp()` for font sizes; `flex-wrap` for grids |
 
-## Checklist Before Handing Over
+## Pre-Handover Checklist
 
-- [ ] All 6 sections present (or consciously cut ones that don't fit)
-- [ ] Stat counters animate on scroll into view
-- [ ] At least one accordion and one timeline
-- [ ] Hover tooltips on ≥3 jargon terms
+- [ ] Every statistic has a real source URL (hover tooltip + Sources tab)
+- [ ] Each section opens with its most important insight (inverted pyramid)
+- [ ] Hero contains a prior-knowledge analogy
+- [ ] At least one concrete example precedes each abstract concept
+- [ ] Interactive elements match topic shape (not copied from NBA example)
+- [ ] Tab switching uses the exact pattern above
 - [ ] No external URLs in `<link>` or `<script src>` tags
-- [ ] File opens without errors in browser
