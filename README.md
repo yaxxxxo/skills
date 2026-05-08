@@ -14,7 +14,11 @@ npx skills@latest add yaxxxxo/skills/<skill-name>
 
 Skills for creating rich, interactive content.
 
-<!-- Add skills here as you build them -->
+- **interactive-html-explainer** — Turn any topic into a self-contained, interactive single-page HTML explainer with tabbed navigation, animated stats, timelines, and hover tooltips. No external dependencies.
+
+  ```
+  npx skills@latest add yaxxxxo/skills/interactive-html-explainer
+  ```
 
 ---
 
