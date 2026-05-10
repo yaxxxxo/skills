@@ -5,7 +5,7 @@ A collection of agent skills for Claude Code.
 Install any skill with:
 
 ```
-npx skills@latest add yaxxxxo/skills/<skill-name>
+npx skills@latest add yaxxxxo/skills/skills/<skill-name>
 ```
 
 ---
@@ -17,7 +17,7 @@ Skills for creating rich, interactive content.
 - **interactive-html-explainer** — Turn any topic into a self-contained, interactive single-page HTML explainer with tabbed navigation, animated stats, timelines, and hover tooltips. No external dependencies.
 
   ```
-  npx skills@latest add yaxxxxo/skills/interactive-html-explainer
+  npx skills@latest add yaxxxxo/skills/skills/interactive-html-explainer
   ```
 
 ---
